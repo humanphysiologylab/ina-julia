@@ -18,7 +18,7 @@ include("objectives.jl")
 include("../../src/losses.jl")
 @info "files are loaded"
 
-config_name = abspath("scripts/configs/config_all.json")
+config_name = abspath("scripts/configs/config_m1.json")
 @info "config $config_name"
 config = make_config(config_name)
 output_dir_name = make_output_dirs(config)
@@ -34,11 +34,10 @@ u₀ = config["runtime"]["states"]
 u = deepcopy(u₀)
 du = similar(u₀)
 p_dict = config["runtime"]["constants"]
+model_type = config["runtime"]["model_type"]
+INa.compute_algebraic!(u₀, p_dict, a, model_type=model_type)
 
-INa.compute_algebraic!(u₀, p_dict, a)
-INa.compute_rates!(du, u, p_dict, 0.0, a)
-
-prob = create_ode_problem(du, u, a, config, tspan, cb_step_v)
+prob = create_ode_problem(du, u, a, config, tspan, callbackset)
 
 solve_kwargs_default = (; reltol, abstol, solver, saveat, dt)
 sol = solve_model(prob, (;), solve_kwargs_default);
