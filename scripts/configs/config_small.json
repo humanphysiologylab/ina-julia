@@ -1,0 +1,45 @@
+{
+  "popsize": 16,
+  "maxtime": 10,
+  "traceint": 1,
+  "NM_iters": 10,
+
+  "output_folder_name": "results/tttest/",
+
+  "loss": "RMSE",
+  "columns_control": ["I_out"],
+  "columns_model": ["I_out"],
+
+  "model_name": "calculate_model_1!",
+  "flag_tau_v_half": false, 
+  "filename_legend_states": "data/legends/legend_states.csv",
+  "filename_legend_constants": "data/legends/legend_constants_m1.csv",
+  "filename_legend_algebraic": "data/legends/legend_algebraic.csv",
+  "filename_protocol": "data/protocols/protocol_sparse.csv",
+
+  "experimental_conditions": {
+    "common": {
+      "params": {
+
+        "c_p": {
+          "bounds": [0.1, 10],
+          "is_multiplier": true
+        },
+        "c_m": {
+          "bounds": [0.1, 10],
+          "is_multiplier": true
+        }
+      }
+    },
+    "trace_1" : {
+      "params" :{
+        "v_off": {
+          "bounds": [-5.0, 5.0],
+          "is_multiplier": false
+        }
+      },
+      "filename_phenotype": "data/training/artificial_data.csv",
+      "filename_sample_weight":"data/weights/weights_ina.csv"
+    }
+  }
+}
