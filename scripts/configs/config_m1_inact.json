@@ -1,21 +1,21 @@
 {
-  "popsize": 512,
-  "maxtime": 7200,
-  "traceint": 900,
-  "NM_iters": 1000,
-  "flag":"act",
-  "output_folder_name": "results/M2_12_26_0014/",
+  "popsize": 16,
+  "maxtime": 10,
+  "traceint": 6,
+  "NM_iters": 10,
+  "flag":"inact",
+  "output_folder_name": "results/M1_12_26_0014/",
 
   "loss": "RMSE",
   "columns_control": ["I_out"],
   "columns_model": ["I_out"],
 
-  "model_type": "B",
+  "model_type": "A",
   "flag_tau_v_half": false,
   "filename_legend_states": "data/legends/legend_states.csv",
-  "filename_legend_constants": "data/legends/legend_constants_m2.csv",
+  "filename_legend_constants": "data/legends/legend_constants_m1_inact.csv",
   "filename_legend_algebraic": "data/legends/legend_algebraic.csv",
-  "filename_protocol": "data/protocols/protocol_sparse_activation.csv",
+  "filename_protocol": "data/protocols/protocol_sparse_inactivation.csv",
 
   "experimental_conditions": {
     "common": {
@@ -100,6 +100,22 @@
         "tau_z": {
           "bounds": [0.1, 10],
           "is_multiplier": true
+        },
+        "v_half_m": {
+          "bounds": [10.0, 60.0],
+          "is_multiplier": false
+        },
+        "v_half_h": {
+          "bounds": [50.0, 100.0],
+          "is_multiplier": false
+        },
+        "k_m": {
+          "bounds": [1.0, 10.0],
+          "is_multiplier": false
+        },
+        "k_h": {
+          "bounds": [1.0, 10.0],
+          "is_multiplier": false
         },
         "x_c_comp": {
           "bounds": [0.01, 1.1],

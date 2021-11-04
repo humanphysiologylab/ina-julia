@@ -3,7 +3,7 @@
   "maxtime": 7200,
   "traceint": 900,
   "NM_iters": 1000,
-
+  "flag":"act",
   "output_folder_name": "results/M3_12_26_0014/",
 
   "loss": "RMSE",

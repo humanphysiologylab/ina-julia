@@ -98,6 +98,8 @@ function make_config(config_filename)
     model_type = config["initial"]["model_type"]
     config["runtime"]["model_type"] = Symbol(model_type) # Meta.parse(Main.eval(model_name))  # 
 
+    flag = config["initial"]["flag"]
+    config["runtime"]["flag"] = Symbol(flag)
 
     gene_keys_opt, bounds, mask_multipliers =
         generate_bounds_gammas_mask_multipliers(config["runtime"]["genes_dict"])

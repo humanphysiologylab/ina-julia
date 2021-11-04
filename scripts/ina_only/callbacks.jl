@@ -3,6 +3,7 @@ using DifferentialEquations
 cb_step_v = PresetTimeCallback(protocol.t, change_step_v!, save_positions = (false, false))
 
 t_steady_state = (0.0:0.25:5.0)
+t_steady_state = (0.0:0.6:9.0)
 cb_steady_state =
     PresetTimeCallback(t_steady_state, change_du!, save_positions = (false, false))
 callbackset = CallbackSet(cb_step_v, cb_steady_state)

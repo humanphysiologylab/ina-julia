@@ -5,7 +5,7 @@
   "NM_iters": 10,
 
   "output_folder_name": "results/M1_12_26_0014/",
-
+  "flag":"act",
   "loss": "RMSE",
   "columns_control": ["I_out"],
   "columns_model": ["I_out"],

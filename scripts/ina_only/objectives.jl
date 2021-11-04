@@ -109,9 +109,9 @@ function calculate_data_segments_serial(
 
     tspan_end = prob.tspan[2]
     step_size = solve_kwargs_default.saveat
-    all_steps = 20
+    all_steps = n_steps
     segment_size_sec = tspan_end / all_steps
-    segment_size_timestamps = Int(tspan_end / all_steps / step_size)
+    segment_size_timestamps = floor(Int,round(segment_size_sec / step_size, digits = 0))
 
     for i ∈ 1:n_steps
         # Threads.@threads for i ∈ 1: n_steps
@@ -123,7 +123,8 @@ function calculate_data_segments_serial(
         if sol_segment.retcode == :Success
             i_start = (i - 1) * segment_size_timestamps + 1
             i_end = i * segment_size_timestamps
-            data_segmented[i_start:i_end] = sol_segment[:I_out]
+            # println(tspan_segment,"  ", i_end - i_start, "  ", length(sol_segment[:I_out]))
+            data_segmented[i_start:i_end] = sol_segment[:I_out][1:segment_size_timestamps]
         else
             sol_segment.retcode
         end

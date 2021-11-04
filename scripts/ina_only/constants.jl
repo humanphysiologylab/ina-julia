@@ -28,5 +28,4 @@ const abstol = LVector((
 const solver = CVODE_BDF();
 const dt = 1e-9  # initial
 const tspan_initial = (0.0, 10.0)
-const tspan = (0.0, 5.0)
 const saveat = 5e-5 # tspan[1]: 5e-5: tspan[2]

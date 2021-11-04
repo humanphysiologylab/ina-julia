@@ -18,7 +18,7 @@ include("objectives.jl")
 include("../../src/losses.jl")
 @info "files are loaded"
 
-config_name = abspath("scripts/configs/config_m1.json")
+config_name = abspath("scripts/configs/config_m1_inact.json")
 @info "config $config_name"
 config = make_config(config_name)
 output_dir_name = make_output_dirs(config)
@@ -36,6 +36,19 @@ du = similar(u₀)
 p_dict = config["runtime"]["constants"]
 model_type = config["runtime"]["model_type"]
 INa.compute_algebraic!(u₀, p_dict, a, model_type=model_type)
+
+flag = config["runtime"]["flag"]
+if flag == :act
+    const tspan = (0.0, 5.0)
+    const array_length = 100000
+    const n_steps = 20
+elseif flag == :inact
+    const tspan = (0.0, 9.0)
+    const array_length = 180000
+    const n_steps = 15
+else
+    error("no such flag, choose only 'act' or 'inact'")
+end
 
 prob = create_ode_problem(du, u, a, config, tspan, callbackset)
 
@@ -58,10 +71,10 @@ remade_bounds = [
 
 p = prepare_p(x₀, p_kwargs...)
 
-array_length = 100000
+
 
 data_true = similar(zeros(array_length))
-calculate_data_segmented!(data_true, p, prob, solve_kwargs_default)
+calculate_data_segmented!(data_true, p, prob, solve_kwargs_default, n_steps)
 plot(data_true)
 
 

@@ -38,6 +38,19 @@ p_dict = config["runtime"]["constants"]
 model_type = config["runtime"]["model_type"]
 INa.compute_algebraic!(u₀, p_dict, a, model_type=model_type)
 
+flag = config["runtime"]["flag"]
+if flag == :act
+    const tspan = (0.0, 5.0)
+    const array_length = 100000
+    const n_steps = 20
+elseif flag == :inact
+    const tspan = (0.0, 9.0)
+    const array_length = 180000
+    const n_steps = 15
+else
+    error("no such flag, choose only 'act' or 'inact'")
+end
+
 prob = create_ode_problem(du, u, a, config, tspan, cb_step_v)
 
 solve_kwargs_default = (; reltol, abstol, solver, saveat, dt)
@@ -58,8 +71,6 @@ remade_bounds = [
 ]
 
 p = prepare_p(x₀, p_kwargs...)
-
-array_length = 100000
 
 data_true = config["initial"]["experimental_conditions"]["trace_1"]["phenotype"].I_out
 flag_tau_v_half = config["initial"]["flag_tau_v_half"]
@@ -84,7 +95,8 @@ res = bboptimize(
         solve_kwargs_default,
         weight,
         flag_tau_v_half,
-    );
+        n_steps
+        );
     SearchRange = remade_bounds,
     MaxTime = maxtime,
     TraceInterval = traceint,
@@ -108,7 +120,9 @@ res_n_m = ScipyOptimize.minimize(
         prob,
         solve_kwargs_default,
         weight,
-        flag_tau_v_half),
+        flag_tau_v_half,
+        n_steps
+        ),
     x_opt,
     bounds = remade_bounds,
     callback = cb_NM,
